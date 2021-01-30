@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# api_key ignore
+**config.py
+
 # Mapbox API ignore
 **config.js
