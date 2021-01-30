@@ -18,16 +18,16 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(myMap);
 
 
-// // Grab the data with d3
-// d3.json(url).then(function(data) {
+// Grab the data with d3
+d3.json(url).then(function(data) {
 
-//   console.log(data);
+  console.log(data);
 
-//   // Add 
-//   L.geoJson(data, {
-//     onEachFeature: function (feature, layer) {
-//       layer.bindPopup('<h1>'+feature.properties.Coll_Day_N+'</h1><p>name: '+feature.properties.Hauler+'</p><p>contact: '+feature.properties.Phone_Num+'</p>');
-//     }
-//   }).addTo(myMap);
+  // // Add 
+  // L.geoJson(data, {
+  //   onEachFeature: function (feature, layer) {
+  //     layer.bindPopup('<h1>'+feature.properties.Coll_Day_N+'</h1><p>name: '+feature.properties.Hauler+'</p><p>contact: '+feature.properties.Phone_Num+'</p>');
+  //   }
+  // }).addTo(myMap);
 
-// });
+});
