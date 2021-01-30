@@ -2,8 +2,6 @@ import requests
 import json
 import prettytable
 
-api_key = "3a87b7ea33b64edca8825beaea7b5694";
-
 headers = {'Content-type': 'application/json'}
 data = json.dumps({"seriesid": ['CUUR0000SA0','SUUR0000SA0'],"startyear":"2011", "endyear":"2014"})
 p = requests.post('https://api.bls.gov/publicAPI/v2/timeseries/data/', data=data, headers=headers)
