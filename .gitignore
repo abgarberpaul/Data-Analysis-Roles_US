@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# keep the API code hidden
+# Mapbox API ignore
 **config.js
