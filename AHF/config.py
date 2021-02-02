@@ -1,2 +1,2 @@
-# API Key for BLS (Bureau of Labor Statistics)
-api_key = "3a87b7ea33b64edca8825beaea7b5694"
+# API Key for mapbox
+API_KEY = "sk.eyJ1IjoiZmFuY2hlYTg0IiwiYSI6ImNra2ExOXBkZzBtdW8yeG8ycmhwenlvZ3MifQ._RB-IsGGWVssecGL66SOfA"
