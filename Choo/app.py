@@ -35,7 +35,7 @@ app = Flask(__name__)
 
 # TODO: replace these lines with a call to MongoDB
 import json 
-with open("./DataAnalystSMALL.json") as f:
+with open("./DataAnalystDropJobDescription.json") as f:
     SMALLdata = json.load(f)
 
 # Set route
