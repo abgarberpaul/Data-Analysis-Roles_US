@@ -45,3 +45,6 @@ d3.json(dataanalystpath).then(function (data) {
 
 // [{location:[lat,lon]}]
 // HINTS: Store this in MongoDB so you don't have to do some stuff
+// Q: How do we get this from MONGO into a webpage
+// A: checkout class examples from advanced storage & retrieval (flask)
+// Flask ==>
