@@ -44,3 +44,4 @@ d3.json(dataanalystpath).then(function (data) {
 });
 
 // [{location:[lat,lon]}]
+// HINTS: Store this in MongoDB so you don't have to do some stuff
