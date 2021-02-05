@@ -43,7 +43,7 @@ d3.json(dataanalystpath).then(function (data) {
     // Loop through the plotdata array and create one marker for each city, bind a popup containing its name and population add it to the map
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
-        L.marker(city.location)
+        L.circleMarker(city.location)
             .bindPopup("<h1>" + city.citystate + "</h1>")
             .addTo(myMap);
     }
