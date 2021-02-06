@@ -54,7 +54,7 @@ var baseMaps = {
 // Create Map, pass in standard layers for default setting
 var myMap = L.map("map", {
     center: [38.58, -93.46],
-    zoom: 4,
+    zoom: 3,
     layers: [standardMap, layerOne]
   });
   
@@ -150,31 +150,57 @@ d3.json(dataanalystpath).then(function (data) {
      
     // LAYER THREE       : HEAT MAP
     
+    var index = 0;
+    var plotdata = [];
+    Object.keys(data.lat).forEach(function () {
+        var thisobject = {
+            lat: data.lat[index],
+            lng: data.lng[index],
+            count: data.Salary_Mid[index]
+        }
+        plotdata.push(thisobject)
+        index = index + 1
+    })
+
+    // attempts not to hard code max
+
+    console.log(data.Salary_Mid)
+    var salaryArray = Object.values(data.Salary_Mid)
+    console.log(Math.max(...salaryArray))
+
+    // TODO: do not hard code max. 
+    var testData = {
+      max: 150000,
+      data: plotdata
+    }
+
     var cfg = {
-        // radius should be small ONLY if scaleRadius is true (or small radius is intended)
-        // if scaleRadius is false it will be the constant radius used in pixels
-        "radius": 2,
-        "maxOpacity": .8,
-        // scales the radius based on map zoom
-        "scaleRadius": true,
-        // if set to false the heatmap uses the global maximum for colorization
-        // if activated: uses the data maximum within the current map boundaries
-        //   (there will always be a red spot with useLocalExtremas true)
-        "useLocalExtrema": true,
-        // which field name in your data represents the latitude - default "lat"
-        latField: city.lat,
-        // which field name in your data represents the longitude - default "lng"
-        lngField: city.lng,
-        // which field name in your data represents the data value - default "value"
-        valueField: data.Salary_Mid
-        };
+      // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+      // if scaleRadius is false it will be the constant radius used in pixels
+      "radius": 2,
+      "maxOpacity": .8,
+      // scales the radius based on map zoom
+      "scaleRadius": true,
+      // if set to false the heatmap uses the global maximum for colorization
+      // if activated: uses the data maximum within the current map boundaries
+      //   (there will always be a red spot with useLocalExtremas true)
+      "useLocalExtrema": true,
+      // which field name in your data represents the latitude - default "lat"
+      latField: 'lat',
+      // which field name in your data represents the longitude - default "lng"
+      lngField: 'lng',
+      // which field name in your data represents the data value - default "value"
+      valueField: 'count'
+    };
 
     var heatmapLayer = new HeatmapOverlay(cfg);
    
-    // heatmapLayer.addTo(layerThree)
-    // layerThree.addTo(myMap);
 
-    heatmapLayer.setData(data);
+    // layerThree.addTo(myMap);
+    // console.log(cfg);
+
+    heatmapLayer.setData(testData);
+    heatmapLayer.addTo(layerThree);
 
   // code for LEGEND
   
