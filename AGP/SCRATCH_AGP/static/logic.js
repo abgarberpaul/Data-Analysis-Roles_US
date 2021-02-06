@@ -151,6 +151,7 @@ d3.json(dataanalystpath).then(function (data) {
             layerTwo.addTo(myMap);}
      
     // LAYER THREE       : HEAT MAP
+    // SHOWS THE CONCENTRATION OF DATA POINTS (does not tie to salary )
     
     var index = 0;
     var plotdata = [];
