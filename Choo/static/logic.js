@@ -1,6 +1,8 @@
 // API
 var dataanalystpath = "http://127.0.0.1:5000/data";
 console.log(dataanalystpath)
+// var API_KEY = "pk.eyJ1Ijoic2Nob280MjQiLCJhIjoiY2trOXpnMXJiMDhjODJ4b2I2Yndrb2U2eSJ9.UTe75ZM2CUOA8GIpDFAhZw";
+
 
 // Creating map object
 var myMap = L.map("map", {
@@ -43,7 +45,7 @@ d3.json(dataanalystpath).then(function (data) {
     // Loop through the plotdata array and create one marker for each city, bind a popup containing its name and population add it to the map
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
-        L.circleMarker(city.location)
+        L.marker(city.location)
             .bindPopup("<h1>" + city.citystate + "</h1>")
             .addTo(myMap);
     }
