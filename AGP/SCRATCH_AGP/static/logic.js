@@ -6,6 +6,7 @@ console.log(dataanalystpath)
 
 var layerOne = new L.LayerGroup();
 var layerTwo = new L.LayerGroup();
+var layerThree = new L.LayerGroup();
 
 // // SET UP: define variables for layers
 
@@ -46,13 +47,14 @@ var baseMaps = {
 // Overlay Object (holds over layers)
  var mapLayers = {
    "Layer One": layerOne,
-   "Layer Two": layerTwo
+   "Layer Two": layerTwo,
+   "Layer Three": layerThree
  }
  
 // Create Map, pass in standard layers for default setting
 var myMap = L.map("map", {
     center: [38.58, -93.46],
-    zoom: 4,
+    zoom: 3,
     layers: [standardMap, layerOne]
   });
   
@@ -107,6 +109,9 @@ d3.json(dataanalystpath).then(function (data) {
 
     // ORIGINAL PATH:
     // Loop through the plotdata array and create one marker for each city, bind a popup containing its name and population add it to the map
+  
+  
+    // LAYER ONE
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
         L.circleMarker(city.location, {
@@ -123,7 +128,8 @@ d3.json(dataanalystpath).then(function (data) {
               )
             .addTo(layerOne);
             layerOne.addTo(myMap);}
-
+    
+    // LAYER TWO
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
         L.circleMarker(city.location, {
@@ -141,65 +147,86 @@ d3.json(dataanalystpath).then(function (data) {
               )
             .addTo(layerTwo);
             layerTwo.addTo(myMap);}
-            
-    // }
+     
+    // LAYER THREE       : HEAT MAP
+    
+    var index = 0;
+    var plotdata = [];
+    Object.keys(data.lat).forEach(function () {
+        var thisobject = {
+            lat: data.lat[index],
+            lng: data.lng[index],
+            count: data.Salary_Mid[index]
+        }
+        plotdata.push(thisobject)
+        index = index + 1
+    })
 
+    // attempts not to hard code max
 
+    console.log(data.Salary_Mid)
+    var salaryArray = Object.values(data.Salary_Mid)
+    console.log(Math.max(...salaryArray))
 
+    // TODO: do not hard code max. 
+    var testData = {
+      max: 150000,
+      data: plotdata
+    }
 
+    var cfg = {
+      // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+      // if scaleRadius is false it will be the constant radius used in pixels
+      "radius": 2,
+      "maxOpacity": .8,
+      // scales the radius based on map zoom
+      "scaleRadius": true,
+      // if set to false the heatmap uses the global maximum for colorization
+      // if activated: uses the data maximum within the current map boundaries
+      //   (there will always be a red spot with useLocalExtremas true)
+      "useLocalExtrema": true,
+      // which field name in your data represents the latitude - default "lat"
+      latField: 'lat',
+      // which field name in your data represents the longitude - default "lng"
+      lngField: 'lng',
+      // which field name in your data represents the data value - default "value"
+      valueField: 'count'
+    };
 
-//   },
+    var heatmapLayer = new HeatmapOverlay(cfg);
+   
 
-});
+    // layerThree.addTo(myMap);
+    // console.log(cfg);
 
-//   pointToLayer: function(feature, latlng){
-//     return L.circleMarker(latlng)
-//   }
-
-//   }).addTo(layerOne);
-//   layerOne.addTo(myMap);
-// }
-//  // NEW LAYER :
-
-// // Create a variable for the new data set
-//   var plateData
-
-//   // Grab plate data with d3
-//   d3.json(Tec_link).then(function(tec_data) {
-//     console.log(tec_data);
-//     L.geoJson(tec_data).addTo(plates);
-
-//     // Add Layer to the Map
-//     plates.addTo(myMap)
-// });
-
-
+    heatmapLayer.setData(testData);
+    heatmapLayer.addTo(layerThree);
 
   // code for LEGEND
   
-//   var legend = L.control({position: 'bottomright'});
+        var legend = L.control({position: 'bottomright'});
 
-//   legend.onAdd = function (map) {
-  
-//       var div = L.DomUtil.create('div', 'info legend'),
-//           depth = [1, 2, 3, 4],
-//           labels = [];
+        legend.onAdd = function (map) {
 
-//       div.innerHTML += "<h3>DATA</h3>"
-  
-//       // loop through depth and create legend colors
-//       for (var i = 0; i < feature.properties.Rating.length; i++) {
-//           div.innerHTML +=
-//               '<i style="background:' + pointColor (feature.properities.Rating[i] + 1) + '"></i> ' +
-//               feature.properties.Rating[i] + (features.properties.Rating[i + 1] ? '&ndash;' + feature.properities.Rating[i + 1] + '<br>' : '+');
-//       }
-  
-//       return div;
-//   };
-  
-//   legend.addTo(myMap);
+            var div = L.DomUtil.create('div', 'info legend'),
+                ratings = [1, 2, 3, 4],
+                labels = [];
 
-// });
+            div.innerHTML += "<h3>DATA</h3>"
+
+            // loop through depth and create legend colors
+            for (var i = 0; i < city.Rating.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + pointColor (city.Rating[i] + 1) + '"></i> ' +
+                    city.Rating[i] + (city.Rating[i + 1] ? '&ndash;' + city.Rating[i + 1] + '<br>' : '+');
+            }
+
+            return div;
+        };
+
+        legend.addTo(myMap);
+
+        });
 
 // [{location:[lat,lon]}]
 // HINTS: Store this in MongoDB so you don't have to do some stuff
