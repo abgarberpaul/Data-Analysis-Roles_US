@@ -9,8 +9,8 @@
     // Supports UMD. AMD, CommonJS/Node.js and browser context
     if (typeof module !== "undefined" && module.exports) {
       module.exports = factory(
-        require('heatmap.js'),
-        require('leaflet')
+        require('../../SCRATCH_AGP_CLEAN/static/node_modules/heatmap.js.js'),
+        require('../../SCRATCH_AGP_CLEAN/static/node_modules/leaflet')
       );
     } else if (typeof define === "function" && define.amd) {
       define(['heatmap.js', 'leaflet'], factory);

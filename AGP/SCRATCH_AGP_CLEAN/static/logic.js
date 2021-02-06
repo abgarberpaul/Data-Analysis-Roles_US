@@ -55,7 +55,7 @@ var baseMaps = {
 var myMap = L.map("map", {
     center: [38.58, -93.46],
     zoom: 3,
-    layers: [standardMap, layerOne]
+    layers: [grayMap, layerThree]
   });
   
 // Create a Layer Control + Pass in baseMaps and overlayMaps + Add the Layer Control to the Map
@@ -112,11 +112,13 @@ d3.json(dataanalystpath).then(function (data) {
   
   
     // LAYER ONE
+
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
+        // var salary = plotdata.Salary_Mid[i];
         L.circleMarker(city.location, {
             color : "black",
-            radius : city.Rating*5,
+            radius : city.Rating*2,
             fillOpacity : 0.75,
             fillColor : pointColor(city.Rating)            
         })
@@ -134,7 +136,7 @@ d3.json(dataanalystpath).then(function (data) {
         var city = plotdata[i];
         L.circleMarker(city.location, {
             color : "black",
-            radius : city.Rating*5,
+            radius : city.Rating*2,
             fillOpacity : 0.75,
             fillColor : pointColor2(city.Rating)            
         })
@@ -149,6 +151,7 @@ d3.json(dataanalystpath).then(function (data) {
             layerTwo.addTo(myMap);}
      
     // LAYER THREE       : HEAT MAP
+    // SHOWS THE CONCENTRATION OF DATA POINTS (does not tie to salary )
     
     var index = 0;
     var plotdata = [];
@@ -164,33 +167,33 @@ d3.json(dataanalystpath).then(function (data) {
 
     // attempts not to hard code max
 
-    console.log(data.Salary_Mid)
-    var salaryArray = Object.values(data.Salary_Mid)
-    console.log(Math.max(...salaryArray))
+    // console.log(data.Salary_Mid)
+    // var salaryArray = Object.values(data.Salary_Mid)
+    // console.log(Math.max(...salaryArray))
 
     // TODO: do not hard code max. 
     var testData = {
-      max: 150000,
+      max: 60,
       data: plotdata
     }
 
     var cfg = {
       // radius should be small ONLY if scaleRadius is true (or small radius is intended)
       // if scaleRadius is false it will be the constant radius used in pixels
-      "radius": 2,
+      "radius": 20,
       "maxOpacity": .8,
       // scales the radius based on map zoom
-      "scaleRadius": true,
+      "scaleRadius": false,
       // if set to false the heatmap uses the global maximum for colorization
       // if activated: uses the data maximum within the current map boundaries
       //   (there will always be a red spot with useLocalExtremas true)
-      "useLocalExtrema": true,
+      "useLocalExtrema": false,
       // which field name in your data represents the latitude - default "lat"
       latField: 'lat',
       // which field name in your data represents the longitude - default "lng"
       lngField: 'lng',
       // which field name in your data represents the data value - default "value"
-      valueField: 'count'
+      valueField: 'lat'
     };
 
     var heatmapLayer = new HeatmapOverlay(cfg);
