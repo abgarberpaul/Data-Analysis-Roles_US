@@ -62,30 +62,34 @@ var myMap = L.map("map", {
   L.control.layers(baseMaps, mapLayers).addTo(myMap);
 
 // controls the colors of the dots (paired to RATING)
-function pointColor(Rating){
+function pointColorRating(Rating){
     if (Rating>4)
-    return "DarkGreen"
+    return "Cyan"
+    if (Rating>4)
+    return "DeepBlueSky"
     if (Rating>3)
-    return "GreenYellow"
+    return "RoyalBlue"
     else if (Rating>2)
-    return "Yellow"
+    return "MediumBlue"
+    else if (Rating>1)
+    return "DarkBlue"
     else 
-    return "Blue"
+    return "MidnightBlue"
   }  
 
 function pointColorSalary(salary_Mid){
     if (salary_Mid>145000)
-    return "Fuchsia"
+    return "#8f00b3"
     if (salary_Mid>125000)
-    return "DarkMagenta"
+    return "#d11aff"
     else if (salary_Mid>100000)
-    return "MediumSlateBlue"
+    return "#e066ff"
     else if (salary_Mid>75000)
-    return "Cyan"
+    return "#f0b3ff"
     else if (salary_Mid>55000)
-    return "MediumBlue"
+    return "#fae6ff"
     else 
-    return "MediumSpringGreen"
+    return "#ffffff"
 }    
 // FIRST APPROACH (group work): flask (app.py) > serve in app > js queries app
 
@@ -122,12 +126,13 @@ d3.json(dataanalystpath).then(function (data) {
         // var salary = plotdata.Salary_Mid[i];
         L.circleMarker(city.location, {
             color : "black",
-            radius : city.Rating*2,
+            radius : city.Rating*4,
             fillOpacity : 0.75,
-            fillColor : pointColor(city.Rating)            
+            fillColor : pointColorRating(city.Rating)            
         })
             .bindPopup(
-                city.citystate + 
+              "SALARY LAYER"+
+              "<br>"+ city.citystate + 
                 "<hr> Industry: "+ city.industry +
                 "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
@@ -145,13 +150,38 @@ d3.json(dataanalystpath).then(function (data) {
             fillColor : pointColorSalary(city.salary_Mid)            
         })
             .bindPopup(
-                "SECOND LAYER"+
+                "RATINGS LAYER"+
                 "<br>"+ city.citystate + 
                 "<hr> Industry: "+ city.industry +
                 "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
               )
             .addTo(layerTwo);
+
+            // var legendSalary = L.control({position: 'bottomright'});
+
+            // legendSalary.onAdd = function () {
+            //     var div = L.DomUtil.create('div', 'info legend'),
+            //         salary_range = [55000, 75000, 100000, 125000, 145000],
+            //         labels = [];
+    
+            //     div.innerHTML += "<h3> SALARY </h3>"
+            //     console.log(city)
+            //     console.log(city.salary_Mid)
+    
+            //     // loop through salaries and create legend colors
+            //     for (var i = 0; i < salary_range.length; i++) {
+            //         div.innerHTML +=
+            //             '<i style="background:' + pointColorSalary (salary_range[i] + 1) + '"></i> ' +
+            //             salary_range[i] + (salary_range[i + 1] ? '&ndash;' +
+            //             salary_range[i + 1] + '<br>' : '+');
+            //     }
+    
+            //     return div;}
+            // legendSalary.addTo(layerTwo);
+    
+            
+
             layerTwo.addTo(myMap);}
      
     // LAYER THREE       : HEAT MAP
@@ -211,27 +241,53 @@ d3.json(dataanalystpath).then(function (data) {
 
   // code for LEGEND
   
-        var legend = L.control({position: 'bottomright'});
+        var legendSalary = L.control({position: 'bottomright'});
 
-        legend.onAdd = function (map) {
-
+        legendSalary.onAdd = function () {
             var div = L.DomUtil.create('div', 'info legend'),
-                salary_range = [55, 75, 100, 125, 145],
+                salary_range = [55000, 75000, 100000, 125000, 145000],
                 labels = [];
 
-            div.innerHTML += "<h3>DATA</h3>"
+            div.innerHTML += "<h3> SALARY </h3>"
+            console.log(city)
+            console.log(city.salary_Mid)
 
-            // loop through depth and create legend colors
-            for (var i = 0; i < city.salary_Mid.length; i++) {
+            // loop through salaries and create legend colors
+            for (var i = 0; i < salary_range.length; i++) {
                 div.innerHTML +=
-                    '<i style="background:' + pointColorSalary (city.salary_Mid[i] + 1) + '"></i> ' +
-                    city.salary_Mid[i] + (city.salary_Mid[i + 1] ? '&ndash;' + city.salary_Mid[i + 1] + '<br>' : '+');
+                    '<i style="background:' + pointColorSalary (salary_range[i] + 1) + '"></i> ' +
+                    salary_range[i] + (salary_range[i + 1] ? '&ndash;' +
+                    salary_range[i + 1] + '<br>' : '+');
             }
 
             return div;
+            
         };
 
-        legend.addTo(myMap);
+        legendSalary.addTo(myMap);
+        
+        var legendRating = L.control({position: 'bottomleft'});
+
+        legendRating.onAdd = function () {
+            var div = L.DomUtil.create('div', 'info legend'),
+                rating_range = [1, 2, 3, 4, 5],
+                labels = [];
+
+            div.innerHTML += "<h3> RATING </h3>"
+          
+            // loop through salaries and create legend colors
+            for (var i = 0; i < rating_range.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + pointColorRating(rating_range[i] + 1) + '"></i> ' +
+                    rating_range[i] + (rating_range[i + 1] ? '&ndash;' +
+                    rating_range[i + 1] + '<br>' : '+');
+            }
+
+            return div;
+            
+        };
+        legendRating.addTo(myMap);
+
 
         });
 

@@ -16,7 +16,7 @@ db = client.DataAnalyst
 db.DataAnalyst.drop()
 
 # read in CSV data file
-dataanalyst = pd.read_csv("./DataAnalystFULL.csv", delimiter=",")
+dataanalyst = pd.read_csv("./DataAnalystScrubbed_v2.csv", delimiter=",")
 
 # write to JSON file
 mongoFormatted = json.loads(dataanalyst.to_json())
