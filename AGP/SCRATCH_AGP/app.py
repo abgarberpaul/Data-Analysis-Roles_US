@@ -19,7 +19,7 @@ db = client.DataAnalyst
 # Set route
 @app.route('/')
 def index():
-    # Return the template with the teams list passed in
+    # Return the template with the list passed in
     return render_template('index.html')
 
 @app.route("/data")
