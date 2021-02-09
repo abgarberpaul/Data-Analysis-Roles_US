@@ -224,8 +224,8 @@ d3.json(dataanalystpath).then(function (data) {
             // loop through depth and create legend colors
             for (var i = 0; i < city.salary_Mid.length; i++) {
                 div.innerHTML +=
-                    '<i style="background:' + pointColorSalary (city.salary_Mid[i] + 1) + '"></i> ' +
-                    city.salary_Mid[i] + (city.salary_Mid[i + 1] ? '&ndash;' + city.salary_Mid[i + 1] + '<br>' : '+');
+                    '<i style="background:' + pointColorSalary (salary_range[i] + 1) + '"></i> ' +
+                    salary_range[i] + (salary_range[i + 1] ? '&ndash;' + salary_range[i + 1] + '<br>' : '+');
             }
 
             return div;
