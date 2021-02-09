@@ -46,16 +46,16 @@ var baseMaps = {
 
 // Overlay Object (holds over layers)
  var mapLayers = {
-   "Layer One": layerOne,
-   "Layer Two": layerTwo,
-   "Layer Three": layerThree
+   "Rating": layerOne,
+   "Salary": layerTwo,
+   "Job Count": layerThree
  }
  
 // Create Map, pass in standard layers for default setting
 var myMap = L.map("map", {
     center: [38.58, -93.46],
     zoom: 3,
-    layers: [standardMap, layerOne]
+    layers: [grayMap, layerThree]
   });
   
 // Create a Layer Control + Pass in baseMaps and overlayMaps + Add the Layer Control to the Map
@@ -73,15 +73,19 @@ function pointColor(Rating){
     return "Blue"
   }  
 
-function pointColor2(Rating){
-    if (Rating>4)
-    return "Purple"
-    if (Rating>3)
-    return "Pink"
-    else if (Rating>2)
-    return "Red"
+function pointColorSalary(salary_Mid){
+    if (salary_Mid>145000)
+    return "Fuchsia"
+    if (salary_Mid>125000)
+    return "DarkMagenta"
+    else if (salary_Mid>100000)
+    return "MediumSlateBlue"
+    else if (salary_Mid>75000)
+    return "Cyan"
+    else if (salary_Mid>55000)
+    return "MediumBlue"
     else 
-    return "Blue"
+    return "MediumSpringGreen"
 }    
 // FIRST APPROACH (group work): flask (app.py) > serve in app > js queries app
 
@@ -112,18 +116,20 @@ d3.json(dataanalystpath).then(function (data) {
   
   
     // LAYER ONE
+
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
+        // var salary = plotdata.Salary_Mid[i];
         L.circleMarker(city.location, {
             color : "black",
-            radius : city.Rating*5,
+            radius : city.Rating*2,
             fillOpacity : 0.75,
             fillColor : pointColor(city.Rating)            
         })
             .bindPopup(
                 city.citystate + 
                 "<hr> Industry: "+ city.industry +
-                "<br> Salary Midpoint: "+ city.salary_Mid +
+                "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
               )
             .addTo(layerOne);
@@ -134,21 +140,22 @@ d3.json(dataanalystpath).then(function (data) {
         var city = plotdata[i];
         L.circleMarker(city.location, {
             color : "black",
-            radius : city.Rating*5,
+            radius : city.salary_Mid/5000,
             fillOpacity : 0.75,
-            fillColor : pointColor2(city.Rating)            
+            fillColor : pointColorSalary(city.salary_Mid)            
         })
             .bindPopup(
                 "SECOND LAYER"+
                 "<br>"+ city.citystate + 
                 "<hr> Industry: "+ city.industry +
-                "<br> Salary Midpoint: "+ city.salary_Mid +
+                "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
               )
             .addTo(layerTwo);
             layerTwo.addTo(myMap);}
      
     // LAYER THREE       : HEAT MAP
+    // SHOWS THE CONCENTRATION OF DATA POINTS (does not tie to salary )
     
     var index = 0;
     var plotdata = [];
@@ -164,33 +171,33 @@ d3.json(dataanalystpath).then(function (data) {
 
     // attempts not to hard code max
 
-    console.log(data.Salary_Mid)
-    var salaryArray = Object.values(data.Salary_Mid)
-    console.log(Math.max(...salaryArray))
+    // console.log(data.Salary_Mid)
+    // var salaryArray = Object.values(data.Salary_Mid)
+    // console.log(Math.max(...salaryArray))
 
     // TODO: do not hard code max. 
     var testData = {
-      max: 150000,
+      max: 60,
       data: plotdata
     }
 
     var cfg = {
       // radius should be small ONLY if scaleRadius is true (or small radius is intended)
       // if scaleRadius is false it will be the constant radius used in pixels
-      "radius": 2,
+      "radius": 20,
       "maxOpacity": .8,
       // scales the radius based on map zoom
-      "scaleRadius": true,
+      "scaleRadius": false,
       // if set to false the heatmap uses the global maximum for colorization
       // if activated: uses the data maximum within the current map boundaries
       //   (there will always be a red spot with useLocalExtremas true)
-      "useLocalExtrema": true,
+      "useLocalExtrema": false,
       // which field name in your data represents the latitude - default "lat"
       latField: 'lat',
       // which field name in your data represents the longitude - default "lng"
       lngField: 'lng',
       // which field name in your data represents the data value - default "value"
-      valueField: 'count'
+      valueField: 'lat'
     };
 
     var heatmapLayer = new HeatmapOverlay(cfg);
@@ -209,16 +216,16 @@ d3.json(dataanalystpath).then(function (data) {
         legend.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'info legend'),
-                ratings = [1, 2, 3, 4],
+                salary_range = [55, 75, 100, 125, 145],
                 labels = [];
 
             div.innerHTML += "<h3>DATA</h3>"
 
             // loop through depth and create legend colors
-            for (var i = 0; i < city.Rating.length; i++) {
+            for (var i = 0; i < city.salary_Mid.length; i++) {
                 div.innerHTML +=
-                    '<i style="background:' + pointColor (city.Rating[i] + 1) + '"></i> ' +
-                    city.Rating[i] + (city.Rating[i + 1] ? '&ndash;' + city.Rating[i + 1] + '<br>' : '+');
+                    '<i style="background:' + pointColorSalary (city.salary_Mid[i] + 1) + '"></i> ' +
+                    city.salary_Mid[i] + (city.salary_Mid[i + 1] ? '&ndash;' + city.salary_Mid[i + 1] + '<br>' : '+');
             }
 
             return div;
