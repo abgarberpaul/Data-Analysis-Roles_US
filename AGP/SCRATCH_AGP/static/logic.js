@@ -46,9 +46,9 @@ var baseMaps = {
 
 // Overlay Object (holds over layers)
  var mapLayers = {
-   "Layer One": layerOne,
-   "Layer Two": layerTwo,
-   "Layer Three": layerThree
+   "Rating": layerOne,
+   "Salary": layerTwo,
+   "Job Count": layerThree
  }
  
 // Create Map, pass in standard layers for default setting
@@ -73,15 +73,19 @@ function pointColor(Rating){
     return "Blue"
   }  
 
-function pointColor2(Rating){
-    if (Rating>4)
-    return "Purple"
-    if (Rating>3)
-    return "Pink"
-    else if (Rating>2)
-    return "Red"
+function pointColorSalary(salary_Mid){
+    if (salary_Mid>145000)
+    return "Fuchsia"
+    if (salary_Mid>125000)
+    return "DarkMagenta"
+    else if (salary_Mid>100000)
+    return "MediumSlateBlue"
+    else if (salary_Mid>75000)
+    return "Cyan"
+    else if (salary_Mid>55000)
+    return "MediumBlue"
     else 
-    return "Blue"
+    return "MediumSpringGreen"
 }    
 // FIRST APPROACH (group work): flask (app.py) > serve in app > js queries app
 
@@ -125,7 +129,7 @@ d3.json(dataanalystpath).then(function (data) {
             .bindPopup(
                 city.citystate + 
                 "<hr> Industry: "+ city.industry +
-                "<br> Salary Midpoint: "+ city.salary_Mid +
+                "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
               )
             .addTo(layerOne);
@@ -136,15 +140,15 @@ d3.json(dataanalystpath).then(function (data) {
         var city = plotdata[i];
         L.circleMarker(city.location, {
             color : "black",
-            radius : city.Rating*2,
+            radius : city.salary_Mid/5000,
             fillOpacity : 0.75,
-            fillColor : pointColor2(city.Rating)            
+            fillColor : pointColorSalary(city.salary_Mid)            
         })
             .bindPopup(
                 "SECOND LAYER"+
                 "<br>"+ city.citystate + 
                 "<hr> Industry: "+ city.industry +
-                "<br> Salary Midpoint: "+ city.salary_Mid +
+                "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
               )
             .addTo(layerTwo);
@@ -212,16 +216,16 @@ d3.json(dataanalystpath).then(function (data) {
         legend.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'info legend'),
-                ratings = [1, 2, 3, 4],
+                salary_range = [55, 75, 100, 125, 145],
                 labels = [];
 
             div.innerHTML += "<h3>DATA</h3>"
 
             // loop through depth and create legend colors
-            for (var i = 0; i < city.Rating.length; i++) {
+            for (var i = 0; i < city.salary_Mid.length; i++) {
                 div.innerHTML +=
-                    '<i style="background:' + pointColor (city.Rating[i] + 1) + '"></i> ' +
-                    city.Rating[i] + (city.Rating[i + 1] ? '&ndash;' + city.Rating[i + 1] + '<br>' : '+');
+                    '<i style="background:' + pointColorSalary (city.salary_Mid[i] + 1) + '"></i> ' +
+                    city.salary_Mid[i] + (city.salary_Mid[i + 1] ? '&ndash;' + city.salary_Mid[i + 1] + '<br>' : '+');
             }
 
             return div;
