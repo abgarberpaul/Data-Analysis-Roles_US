@@ -76,7 +76,7 @@ function pointColorRating(Rating){
     else 
     return "MidnightBlue"
   }  
-
+// controls the colors of the dots (paired to SALARY)
 function pointColorSalary(salary_Mid){
     if (salary_Mid>145000)
     return "#8f00b3"
@@ -97,7 +97,7 @@ function pointColorSalary(salary_Mid){
 d3.json(dataanalystpath).then(function (data) {
     console.log(data);
 
-// convert the data into coordinates, store related info
+// convert the data into coordinates, store related info:
     console.log(data.lat);
     console.log(Object.keys(data.lat).length);
     var index = 0;
@@ -116,14 +116,14 @@ d3.json(dataanalystpath).then(function (data) {
     console.log(plotdata)
 
     // ORIGINAL PATH:
-    // Loop through the plotdata array and create one marker for each city, bind a popup containing its name and population add it to the map
+    // Loop through the plotdata array and create one marker for each city, 
+    // bind a popup containing its name and population add it to the map.
   
   
-    // LAYER ONE
+    // LAYER ONE: RATING
 
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
-        // var salary = plotdata.Salary_Mid[i];
         L.circleMarker(city.location, {
             color : "black",
             radius : city.Rating*4,
@@ -140,7 +140,7 @@ d3.json(dataanalystpath).then(function (data) {
             .addTo(layerOne);
             layerOne.addTo(myMap);}
     
-    // LAYER TWO
+    // LAYER TWO: SALARY LAYER
     for (var i = 0; i < plotdata.length; i++) {
         var city = plotdata[i];
         L.circleMarker(city.location, {
@@ -156,35 +156,10 @@ d3.json(dataanalystpath).then(function (data) {
                 "<br> Salary Midpoint: $"+ city.salary_Mid +
                 "<br> Rating: "+ city.Rating
               )
-            .addTo(layerTwo);
-
-            // var legendSalary = L.control({position: 'bottomright'});
-
-            // legendSalary.onAdd = function () {
-            //     var div = L.DomUtil.create('div', 'info legend'),
-            //         salary_range = [55000, 75000, 100000, 125000, 145000],
-            //         labels = [];
-    
-            //     div.innerHTML += "<h3> SALARY </h3>"
-            //     console.log(city)
-            //     console.log(city.salary_Mid)
-    
-            //     // loop through salaries and create legend colors
-            //     for (var i = 0; i < salary_range.length; i++) {
-            //         div.innerHTML +=
-            //             '<i style="background:' + pointColorSalary (salary_range[i] + 1) + '"></i> ' +
-            //             salary_range[i] + (salary_range[i + 1] ? '&ndash;' +
-            //             salary_range[i + 1] + '<br>' : '+');
-            //     }
-    
-            //     return div;}
-            // legendSalary.addTo(layerTwo);
-    
-            
-
+            .addTo(layerTwo);            
             layerTwo.addTo(myMap);}
      
-    // LAYER THREE       : HEAT MAP
+    // LAYER THREE : HEAT MAP
     // SHOWS THE CONCENTRATION OF DATA POINTS (does not tie to salary )
     
     var index = 0;
@@ -199,13 +174,7 @@ d3.json(dataanalystpath).then(function (data) {
         index = index + 1
     })
 
-    // attempts not to hard code max
-
-    // console.log(data.Salary_Mid)
-    // var salaryArray = Object.values(data.Salary_Mid)
-    // console.log(Math.max(...salaryArray))
-
-    // TODO: do not hard code max. 
+    // NOTE - hard coded due to time constraints.
     var testData = {
       max: 60,
       data: plotdata
@@ -259,9 +228,7 @@ d3.json(dataanalystpath).then(function (data) {
                     salary_range[i] + (salary_range[i + 1] ? '&ndash;' +
                     salary_range[i + 1] + '<br>' : '+');
             }
-
-            return div;
-            
+            return div;            
         };
 
         legendSalary.addTo(myMap);
@@ -282,14 +249,7 @@ d3.json(dataanalystpath).then(function (data) {
                     rating_range[i] + (rating_range[i + 1] ? '&ndash;' +
                     rating_range[i + 1] + '<br>' : '+');
             }
-
-            return div;
-            
+            return div;            
         };
         legendRating.addTo(myMap);
-
-
         });
-
-// [{location:[lat,lon]}]
-// HINTS: Store this in MongoDB so you don't have to do some stuff
