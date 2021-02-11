@@ -18,10 +18,11 @@ To find the city with the best overall value, we took the three categories which
 After weighting each city's average salary, average job rating, and average amount of jobs, we found that Memphis ranked the heighest of all. Here we found that while Memphis didn't have an overwhelming amount of jobs, they still had decent availibilty. This coupled with the fact that Data Analysts are paid handsomly and people rated their jobs very highly means that Memphis has the best rounded package for someone confident in their abilites to get a job in a market with fewer listings. 
 
 ### How to Run the project: 
-1.	Download the folder “Run Project” from The A-team’s Github. 
-2.	Run the datainsert.py file and ensure the mongo database is being fed JSON
-3.	Insert your api key into the config.js file
-4.	Run the app.py file to set up the website
+1.	Download the folder “Run_Project” from The A-team’s Github. 
+2.	Run the datainsert.py file and ensure the mongo database is being fed JSON.
+3.  Create your config.js file in the "static" folder within Run_Folder. 
+3.	Create the "API_KEY" variable in your config.js and set your api key equal to this variable. 
+4.	Run the app.py file to set up the website.
 
 ### Explanation of commits: 
 Adam's github stopped working a couple days into working on the project. He troubleshot it with Cass but the solution did not stick. He was able to pass us his work through slack so we could push it up. He was an integral part of our team!
