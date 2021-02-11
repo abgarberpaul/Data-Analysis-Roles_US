@@ -19,10 +19,12 @@ After weighting each city's average salary, average job rating, and average amou
 
 ### How to Run the project: 
 1.	Download the folder “Run_Project” from The A-team’s Github. 
-2.	Run the datainsert.py file and ensure the mongo database is being fed JSON.
-3.  Create your config.js file in the "static" folder within Run_Folder. 
-3.	Create the "API_KEY" variable in your config.js and set your api key equal to this variable. 
-4.	Run the app.py file to set up the website.
+2.  Make sure your mongoDB software is installed and working. 
+3.  In the terminal, activate your conda environment. 
+4.	Run the datainsert.py file and ensure the mongo database is being fed JSON.
+5.  Create your config.js file in the "static" folder within Run_Folder. 
+6.	Create the "CONST API_KEY" variable in your config.js and set your api key equal to this variable. 
+7.	Run the app.py file to set up the website.
 
 ### Explanation of commits: 
 Adam's github stopped working a couple days into working on the project. He troubleshot it with Cass but the solution did not stick. He was able to pass us his work through slack so we could push it up. He was an integral part of our team!
