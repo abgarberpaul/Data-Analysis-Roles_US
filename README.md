@@ -23,3 +23,5 @@ After weighting each city's average salary, average job rating, and average amou
 3.	Insert your api key into the config.js file
 4.	Run the app.py file to set up the website
 
+### Explanation of commits: 
+Adam's github stopped working a couple days into working on the project. He troubleshot it with Cass but the solution did not stick. He was able to pass us his work through slack so we could push it up. He was an integral part of our team!
