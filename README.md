@@ -1,6 +1,7 @@
 # The-A-Team-Project2
 
-### Team: Alejandro Barnatan, Aaron Garber-Paul, Brett Williams, Sung Choo, Adam Fancher
+### Team: 
+Alejandro Barnatan, Aaron Garber-Paul, Brett Williams, Sung Choo, Adam Fancher
 
 ### Business question: 
 Describe the data analyst/scientist job market in the United States, what insights can be gleaned in terms of availability, job rating, and salary? Where is the best place to be a data analyst? 
@@ -16,7 +17,7 @@ To find the city with the best overall value, we took the three categories which
 
 After weighting each city's average salary, average job rating, and average amount of jobs, we found that Memphis ranked the heighest of all. Here we found that while Memphis didn't have an overwhelming amount of jobs, they still had decent availibilty. This coupled with the fact that Data Analysts are paid handsomly and people rated their jobs very highly means that Memphis has the best rounded package. 
 
-How to Run the project: 
+### How to Run the project: 
 1.	Download the folder “Run Project” from The A-team’s Github. 
 2.	Run the datainsert.py file and ensure the mongo database is being fed JSON
 3.	Insert your api key into the config.js file
