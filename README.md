@@ -1,4 +1,4 @@
-# The-A-Team-Project2
+# The A-Team Project 2
 
 ### Team: 
 Alejandro Barnatan, Aaron Garber-Paul, Brett Williams, Sung Choo, Adam Fancher
