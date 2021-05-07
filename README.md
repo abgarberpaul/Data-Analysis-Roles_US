@@ -3,8 +3,12 @@
 ### Team: 
 Alejandro Barnatan, Aaron Garber-Paul, Brett Williams, Sung Choo, Adam Fancher
 
+### Data set & Programming technique:
+Our team used a csv of us census data related to jobs. Using SQL we transformed it into a json file. Using javascript, html, and css we constructed an interactive interface to explore salary data for data analysis roles in the US. 
+
+
 ### Business question: 
-Describe the data analyst/scientist job market in the United States, what insights can be gleaned in terms of availability, job rating, and salary? Where is the best place to be a data analyst? 
+Describe the data analyst/scientist job market in the United States, what insights can be gleaned in terms of availability, job rating, and salary? Where is the "best place" to be a data analyst? 
 
 ### Synopsis:
 As expected, job availibilty was concentrated around big metro areas. The west coast, the northeast, and even big southern metro areas like Tampa, Austin, and Atlanta offered good availibitly. 
